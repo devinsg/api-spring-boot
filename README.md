@@ -5,3 +5,5 @@
 - resource group: develop-spring-boot 
 - app service plan: app service java
 - location: central us
+- url: https://demo-spring7.azurewebsites.net
+- database: jdbc:sqlserver://estore-sqlserver.database.windows.net:1433;database=ndemo;user=duyanh2005@estore-sqlserver;password={your_password_here};encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;
