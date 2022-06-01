@@ -5,18 +5,19 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Tag")
+@Table(name="Tag")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Tag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "TagId")
+    @Column(name="Tag_Id")
     private Integer tagId;
 
-    @Column(name = "TagName")
+    @Column(name="Tag_Name")
     private String tagName;
 
-    public Tag () {
+    public Tag() {
+
     }
 
     public Integer getTagId() {
