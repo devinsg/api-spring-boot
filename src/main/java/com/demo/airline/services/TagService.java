@@ -5,6 +5,7 @@ import com.demo.airline.repositories.ITagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,7 +41,13 @@ public class TagService implements ITagService {
         return tagRepository.getById(tagId);
     }
 
-    public Tag saveAndFlush(Tag tag) {
+    @Transactional
+    public Tag update(Tag tag) {
+        return tagRepository.saveAndFlush(tag);
+    }
+
+    @Transactional
+    public Tag create(Tag tag) {
         return tagRepository.saveAndFlush(tag);
     }
 }

@@ -10,5 +10,6 @@ public interface ITagService {
     List<Tag> queryAllAsc();
     List<Tag> queryAllDesc();
     Tag queryByTagId(long tagId);
-    Tag saveAndFlush(Tag tag);
+    Tag update(Tag tag);
+    Tag create(Tag tag);
 }

@@ -32,6 +32,11 @@ public class TagController {
 
     @PostMapping
     public Tag create(@RequestBody final Tag tag){
-        return tagService.saveAndFlush(tag);
+        return tagService.create(tag);
+    }
+
+    @PutMapping
+    public Tag update(@RequestBody final Tag tag){
+        return tagService.update(tag);
     }
 }
