@@ -1,0 +1,11 @@
+airline:
+  welcome: ${salutation} by airline
+student:
+  welcome: ${salutation} by student
+  learning: Information Technology
+server:
+  port: 5000
+  servlet:
+    context-path: /university
+
+title: Bonjour
