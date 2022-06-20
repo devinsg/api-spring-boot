@@ -8,10 +8,7 @@ import com.demo.airline.services.StudentService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
 import java.util.HashMap;
@@ -42,9 +39,19 @@ public class StudentController {
         return map;
     }
 
+    @GetMapping("id")
+    public Student get(@PathVariable("id") long id) {
+        return studentService.get(id);
+    }
+
     @GetMapping(path = "/learning")
     public String getLearning() {
         return studentProperties.getLearning();
+    }
+
+    @GetMapping(path = "/search")
+    public List<Student> searchStudent() {
+        return studentService.getAllStudents();
     }
 
     @GetMapping(
