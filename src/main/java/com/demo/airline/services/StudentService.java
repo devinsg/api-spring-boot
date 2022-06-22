@@ -3,6 +3,7 @@ package com.demo.airline.services;
 import com.demo.airline.dao.StudentDao;
 import com.demo.airline.models.Student;
 import org.springframework.stereotype.Component;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,6 +29,12 @@ public class StudentService implements IStudentService {
     @Override
     public List<Student> getAllStudents(Integer numberOfStudents) {
         return studentDao.getAll().stream().limit(numberOfStudents)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Student> getStudentsPerDepartment(String department, String name) {
+        return studentDao.getAll().stream()
                 .collect(Collectors.toList());
     }
 

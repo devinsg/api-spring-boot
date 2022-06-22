@@ -67,4 +67,14 @@ HandleAdapters
 # Using Request Parameters
 - @RequestMapping and @GetMapping: defines the complete URI template
 - @PathVariable: used to extract the value of the template variable, assign them to method argument
-- @RequestParameter: 
+- @RequestParam: satifys URLs that do not always provide a Query String, provide default value by Java Optional
+- @RequestHeader: using to read headers individually
+- https://www.baeldung.com/spring-rest-http-headers
+
+- use @PathVariable can be made optional
+- use @RequestHeader can be made optional
+- use @RequestParam is always mandatory
+- use @RequestBody is always mandatory for receiving a Request Payload
+- the attribute "path" of @GetMapping can be left out
+- the attribute "produces" of @GetMapping is mandatory
+

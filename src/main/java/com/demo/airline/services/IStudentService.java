@@ -11,4 +11,6 @@ public interface IStudentService {
     List<Student> getAllStudents(Integer numberOfStudents);
 
     List<Student> getStudentsByName(String name);
+
+    List<Student> getStudentsPerDepartment(String department, String name);
 }
