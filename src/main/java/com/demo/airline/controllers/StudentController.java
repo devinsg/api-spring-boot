@@ -2,19 +2,16 @@ package com.demo.airline.controllers;
 
 import com.demo.airline.StudentProperties;
 import com.demo.airline.models.Student;
+import com.demo.airline.models.StudentCollection;
 import com.demo.airline.services.IStudentService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.inject.Inject;
+import java.util.*;
+import javax.inject.*;
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -46,11 +43,11 @@ public class StudentController {
         return map;
     }
 
-    @GetMapping("id")
-    public ResponseEntity<Student> get(@PathVariable("id") long id) {
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<Student> get(@PathVariable long id) {
         Student s1 = studentService.get(id);
         if (s1 == null) return ResponseEntity.badRequest().build();
-        else return ResponseEntity.ok().header("welcome-spring").body(s1);
+        else return ResponseEntity.ok().header("spring-airline", "welcome-spring-airline").body(s1);
     }
 
     @GetMapping(path = "/single")
@@ -58,10 +55,20 @@ public class StudentController {
         return studentService.get(id);
     }
 
-    @GetMapping(path = "/simple")
-    public Student simple(@RequestParam(name="id") Optional<Long> optional) {
-        long id = optional.orElse(2L);
-        return studentService.get(id);
+    @GetMapping(
+        path = "/simple",
+        produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE }
+    )
+    public ResponseEntity<Student> simple(@RequestParam(name="id") Optional<Long> optional) {
+        Student s2 = studentService.get(optional.orElse(2L));
+        return ResponseEntity.ok(s2);
+    }
+
+    @GetMapping(path = "/item")
+    public ResponseEntity<Student> getItem(@PathVariable("id") long id) {
+        Student student = studentService.get(id);
+        if (student == null) return ResponseEntity.badRequest().build();
+        else return ResponseEntity.ok().body(student);
     }
 
     @GetMapping(path = "/learning")
@@ -87,15 +94,99 @@ public class StudentController {
         return studentService.getStudentsPerDepartment(department, optional.orElse(""));
     }
 
+    /*
+     * GET: http://localhost:8085/university/api/v1/student/list
+     * Accept: application/json
+     * */
     @GetMapping(
         path = "/list",
         produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public List<Student> list(@RequestParam(required = false) String name) {
+    public ResponseEntity<List<Student>> list(@RequestParam(required = false) String name) {
         if (name != null) {
-            return studentService.getStudentsByName(name);
+            return ResponseEntity.ok().body(studentService.getStudentsByName(name));
         } else {
-            return studentService.getAllStudents();
+            return ResponseEntity.ok().body(studentService.getAllStudents());
+        }
+    }
+
+    /*
+    * GET: http://localhost:8085/university/api/v1/student/list
+    * Accept: application/xml
+    * */
+    @GetMapping(
+        path = "/list",
+        produces = MediaType.APPLICATION_XML_VALUE
+    )
+    public StudentCollection listXml(@RequestParam(required = false) String name) {
+        StudentCollection studentCollection = new StudentCollection();
+        if (name != null) {
+            Collection<Student> students = studentService.getStudentsByName(name)
+                    .stream().collect(Collectors.toList());
+            studentCollection.setStudents(students);
+            return studentCollection;
+        } else {
+            Collection<Student> lstStudent = studentService.getAllStudents()
+                    .stream().collect(Collectors.toList());
+            studentCollection.setStudents(lstStudent);
+            return studentCollection;
+        }
+    }
+
+    @PostMapping(path="/add")
+    public Student add(@RequestBody Student student) {
+        if (student != null && student.getFirstName() != null && student.getSurname() != null && student.getDept() != null && student.getFees() != null)
+        {
+            Student newStudent = studentService.add(student.getFirstName(), student.getSurname(), student.getDept(), student.getFees());
+            return newStudent;
+        } else {
+            return null;
+        }
+    }
+
+    @PostMapping(
+        path="/create",
+        produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
+        consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}
+    )
+    public ResponseEntity<Student> create(@RequestBody Student student) {
+        try
+        {
+            /*
+            * URI uri = URI.create("/" + student.getId());
+            * return ResponseEntity.accepted().location(uri).build();
+            */
+            if (student != null && student.getFirstName() != null && student.getSurname() != null && student.getDept() != null && student.getFees() != null) {
+                Student newStudent = studentService.add(student.getFirstName(), student.getSurname(), student.getDept(), student.getFees());
+                return ResponseEntity.ok().body(newStudent);
+            } else {
+                return ResponseEntity.badRequest().build();
+            }
+        } catch (Exception ex) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @PostMapping(
+            path="/insert",
+            produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
+            consumes = {MediaType.APPLICATION_XML_VALUE}
+    )
+    public ResponseEntity<Student> insert(@RequestBody Student student) {
+        try
+        {
+            /*
+             * URI uri = URI.create("/" + student.getId());
+             * return ResponseEntity.accepted().location(uri).build();
+             */
+            if (student != null && student.getFirstName() != null && student.getSurname() != null && student.getDept() != null && student.getFees() != null) {
+                Student newStudent = studentService.add(student.getFirstName(), student.getSurname(), student.getDept(), student.getFees());
+                return ResponseEntity.ok().body(newStudent);
+            } else {
+                return ResponseEntity.badRequest().build();
+            }
+        } catch (Exception ex) {
+            return ResponseEntity.badRequest().build();
         }
     }
 }

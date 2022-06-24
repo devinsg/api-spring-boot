@@ -50,4 +50,11 @@ public class StudentService implements IStudentService {
     public void setStudentDao(StudentDao studentDao) {
         this.studentDao = studentDao;
     }
+
+    @Override
+    public Student add(String firstName, String surName, String department, double fees) {
+        long newId = studentDao.add(firstName, surName, department, fees);
+        Student newStudent = studentDao.getOne(newId);
+        return newStudent;
+    }
 }

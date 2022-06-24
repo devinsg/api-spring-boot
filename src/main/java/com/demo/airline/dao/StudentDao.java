@@ -2,6 +2,7 @@ package com.demo.airline.dao;
 
 import com.demo.airline.models.Student;
 
+import javax.persistence.Id;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,5 +27,13 @@ public class StudentDao implements IStudentDao {
     @Override
     public Collection<Student> getAll() {
         return students.values();
+    }
+
+    @Override
+    public long add(String firstName, String surName, String department, double fees) {
+        long newId = students.size();
+        newId++;
+        students.put(newId, new Student(newId ,firstName, surName, department, fees));
+        return newId;
     }
 }

@@ -13,4 +13,6 @@ public interface IStudentService {
     List<Student> getStudentsByName(String name);
 
     List<Student> getStudentsPerDepartment(String department, String name);
+
+    Student add(String firstName, String surName, String department, double fees);
 }

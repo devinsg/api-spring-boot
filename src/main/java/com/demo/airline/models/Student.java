@@ -1,5 +1,7 @@
 package com.demo.airline.models;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 /*
    * TABLE STUDENT
    (
@@ -12,7 +14,7 @@ package com.demo.airline.models;
        CONSTRAINT  PK_STUDENT  PRIMARY KEY(STUDENTID)
    );
 */
-
+@XmlRootElement
 public class Student {
     private long id;
 

@@ -8,4 +8,6 @@ public interface IStudentDao {
     Student getOne(long id);
 
     Collection<Student> getAll();
+
+    long add(String firstName, String surName, String department, double fees);
 }

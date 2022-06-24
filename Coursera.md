@@ -78,3 +78,42 @@ HandleAdapters
 - the attribute "path" of @GetMapping can be left out
 - the attribute "produces" of @GetMapping is mandatory
 
+# Using Request Post Method
+- @RequestBody: indicate method parameters should be bound to the body. The body of request is passed through an HTTPMessageConverter to resolve the method argument depending on the content type of request.
+- ResponseEntity will convert body to JSON, and return result to client
+
+# RestTemplate
+- provide high level methods, make invoking many Restful services easily
+- the Method getForObject() will perform HTTP Get and convert to HTTP response into an object while the method getForEntity() will perform an HTTP Get and return a ResponseEntity
+- Objects passed/returned from these methods are converted to/from HTTP messages by HttpMessageConverted instances, it also access to running services
+- For returning Collection of Java Types: a ParameterizedReference can be used to capture a generic Type, and retain it at runtime in order to obtain a Type instance
+- Example:
+- ResponseEntity<Student> res = new RestTemplate().exchange(${url}/${id}, HttpMethod.GET, null, Student.class, 1);
+- assertThat(responseEntity.getStatusCode(), equalTo(HttpStatus.OK));
+- responseEntity.getBody().forEach(p -> { System.out.println(p); });
+- the Method postForEntity() will perform HTTP Post and convert to HTTP response into an object
+
+# Content Negotiation
+- Server Driven Negotiation: the selection of the best representation is made by an algorithm located at the server side
+- Agent Driven Negotiation : the selection of the best representation is made by an algorithm located at the client side
+- by default a service return json based on Spring Boot classpath, but using the "produces" attribute we can change that, request with a specific Accept header can effectively ask for what they want back. If request don not provide an Accept header, the sevice will return Json as default.
+- using JAXB Customization of XML
+- @GetMapping and @PostMapping: produces and consumes
+
+# Q1: When would you select the getForObject over the getForEntity method from RestTemplate? 
+If you are not interested in the entire ResponseEntity, including headers and status code, using getForObject will directly extract the payload out of the underlying ResponseEntity for you without you extracting it yourself via the method getBody() on the ReponseEntity 
+
+# Q2: What is Content Negotiation?
+The client of a service can request what the textural response type it requires by sending an “Accept” header with the desired MediaType. If no Accept header is sent, the service will decide on the textural response format. In addition, posting data to a service, the service can identify endpoints that only consume a specific textual format by consuming a request with a specific content-type header 
+
+# Q3: What do we mean by URL Templates? 
+URL’s with placeholders in them for data. These are used by @PathVariable annotated method arguments to extract the data from the url and inject it into the RestController method 
+
+# Q4: What is the return type of a Controller Method interpreted as? 
+If the class is annotated as a @Controller, the return type of a method tied to a url is interpreted as a destination. Return types of “String” are passed to a ViewReolver, return types of ModelAndView have the String View value extracted and passed to a ViewResovler. A ModelAndView class is a means of convenience to return a Model attribute and a View using its overloaded constructor
+
+# Q5: What is the Model Object? 
+Is and object that acts as a holder for model attributes. The DispatcherServlet create a Model before invoking a Controller method. This makes it available to the Method for Injection and into which attributes are held. Upon a Response being received by the DispatcherServlet, attributes in the Model are taken and injected as attributes into the Request. The request is dispatched, forwarded, to a ViewResolver that identifies the View which will receive the request and its attributes.   
+
+# Q6: Where does the Thymeleaf ViewResolver look for html files?
+src/main/resource/templates
