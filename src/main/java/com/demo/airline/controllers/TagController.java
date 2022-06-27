@@ -30,7 +30,6 @@ public class TagController {
 
     @PostMapping
     public Tag create(@RequestBody final Tag tag){
-        System.out.println(tag.getTagName());
         return tagRepository.saveAndFlush(tag);
     }
 }
