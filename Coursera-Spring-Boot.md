@@ -117,3 +117,4 @@ Is and object that acts as a holder for model attributes. The DispatcherServlet 
 
 # Q6: Where does the Thymeleaf ViewResolver look for html files?
 src/main/resource/templates
+

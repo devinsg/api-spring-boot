@@ -83,7 +83,7 @@ public class StudentController {
     ) {
         return studentService.getAllStudents().stream()
                 .filter(p -> p.getFirstName().equalsIgnoreCase("Erik"))
-                .filter(p -> p.getSurname().contains(optional.orElse("")))
+                .filter(p -> p.getSurName().contains(optional.orElse("")))
                 .collect(Collectors.toList());
     }
 
@@ -135,9 +135,9 @@ public class StudentController {
 
     @PostMapping(path="/add")
     public Student add(@RequestBody Student student) {
-        if (student != null && student.getFirstName() != null && student.getSurname() != null && student.getDept() != null && student.getFees() != null)
+        if (student != null && student.getFirstName() != null && student.getSurName() != null && student.getDept() != null && student.getFees() != null)
         {
-            Student newStudent = studentService.add(student.getFirstName(), student.getSurname(), student.getDept(), student.getFees());
+            Student newStudent = studentService.add(student.getFirstName(), student.getSurName(), student.getDept(), student.getFees());
             return newStudent;
         } else {
             return null;
@@ -156,8 +156,8 @@ public class StudentController {
             * URI uri = URI.create("/" + student.getId());
             * return ResponseEntity.accepted().location(uri).build();
             */
-            if (student != null && student.getFirstName() != null && student.getSurname() != null && student.getDept() != null && student.getFees() != null) {
-                Student newStudent = studentService.add(student.getFirstName(), student.getSurname(), student.getDept(), student.getFees());
+            if (student != null && student.getFirstName() != null && student.getSurName() != null && student.getDept() != null && student.getFees() != null) {
+                Student newStudent = studentService.add(student.getFirstName(), student.getSurName(), student.getDept(), student.getFees());
                 return ResponseEntity.ok().body(newStudent);
             } else {
                 return ResponseEntity.badRequest().build();
@@ -179,8 +179,8 @@ public class StudentController {
              * URI uri = URI.create("/" + student.getId());
              * return ResponseEntity.accepted().location(uri).build();
              */
-            if (student != null && student.getFirstName() != null && student.getSurname() != null && student.getDept() != null && student.getFees() != null) {
-                Student newStudent = studentService.add(student.getFirstName(), student.getSurname(), student.getDept(), student.getFees());
+            if (student != null && student.getFirstName() != null && student.getSurName() != null && student.getDept() != null && student.getFees() != null) {
+                Student newStudent = studentService.add(student.getFirstName(), student.getSurName(), student.getDept(), student.getFees());
                 return ResponseEntity.ok().body(newStudent);
             } else {
                 return ResponseEntity.badRequest().build();

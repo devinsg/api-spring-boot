@@ -4,12 +4,21 @@ import com.demo.airline.dao.StudentDao;
 import com.demo.airline.models.Student;
 import org.springframework.stereotype.Component;
 
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
 public class StudentService implements IStudentService {
     private StudentDao studentDao;
+
+    public void setStudentDao(StudentDao studentDao) {
+        this.studentDao = studentDao;
+    }
 
     public StudentService() {
         this.studentDao = new StudentDao();
@@ -20,6 +29,7 @@ public class StudentService implements IStudentService {
         return studentDao.getOne(id);
     }
 
+    /* dao implement */
     @Override
     public List<Student> getAllStudents() {
         return studentDao.getAll().stream()
@@ -47,14 +57,11 @@ public class StudentService implements IStudentService {
                 .collect(Collectors.toList());
     }
 
-    public void setStudentDao(StudentDao studentDao) {
-        this.studentDao = studentDao;
-    }
-
     @Override
     public Student add(String firstName, String surName, String department, double fees) {
         long newId = studentDao.add(firstName, surName, department, fees);
         Student newStudent = studentDao.getOne(newId);
         return newStudent;
     }
+
 }

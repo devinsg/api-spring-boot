@@ -143,3 +143,25 @@ CREATE TABLE workshop_registrations
     workshop_id        INT NOT NULL,
     attendee_ticket_id INT NOT NULL
 );
+
+
+DROP TABLE Student;
+CREATE TABLE Student
+(
+    StudentId       INT PRIMARY KEY,
+    FirstName       VARCHAR(50)   NOT NULL,
+    SurName         VARCHAR(50)   NOT NULL,
+    Department      VARCHAR(10)   NOT NULL,
+    Fees            NUMERIC(18, 2) DEFAULT 0,
+    Version         INT DEFAULT 0
+);
+
+DROP TABLE Course;
+CREATE TABLE Course
+(
+    CourseId       INT PRIMARY KEY,
+    StudentId      INT NOT NULL,
+    Title          VARCHAR(50) NOT NULL,
+    Location       VARCHAR(50) NOT NULL, 
+    Version        INT DEFAULT 0
+);

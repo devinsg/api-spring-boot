@@ -925,3 +925,26 @@ INSERT INTO workshops (workshop_id,workshop_name,description,requirements,room,c
 VALUES (12,'Building APIs in ASP.NET Core','','','Oak',30);
 
 -- TODO: workshop_speakers
+
+
+-- table Student
+INSERT INTO Student (FirstName,SurName,Department,Fees)
+VALUES ('Eric', 'Colbert', 'English', 200);
+
+INSERT INTO Student (FirstName,SurName,Department,Fees)
+VALUES ('Mary', 'Contrary', 'French', 300);
+
+INSERT INTO Student (FirstName,SurName,Department,Fees)
+VALUES ('Jason', 'Stewart', 'Chinese', 450);
+
+INSERT INTO Student (FirstName,SurName,Department,Fees)
+VALUES ('Ester', 'Freeman', 'Physical', 280);
+
+INSERT INTO Student (FirstName,SurName,Department,Fees)
+VALUES ('Ann', 'Mousier', 'Khmer', 135);
+
+INSERT INTO Student (FirstName,SurName,Department,Fees)
+VALUES ('Peter', 'Walton', 'Georgraphy', 185);
+
+INSERT INTO Student (FirstName,SurName,Department,Fees)
+VALUES ('David', 'Beckham', 'History', 65);
