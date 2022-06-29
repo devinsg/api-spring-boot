@@ -2,6 +2,7 @@ package com.demo.airline.services;
 
 import com.demo.airline.dao.StudentDao;
 import com.demo.airline.models.Student;
+import com.demo.airline.repositories.IStudentRepository;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
@@ -14,7 +15,11 @@ import java.util.stream.Collectors;
 
 @Component
 public class StudentService implements IStudentService {
+    @Inject
     private StudentDao studentDao;
+
+    @Inject
+    private IStudentRepository studentRepository;
 
     public void setStudentDao(StudentDao studentDao) {
         this.studentDao = studentDao;
@@ -63,5 +68,4 @@ public class StudentService implements IStudentService {
         Student newStudent = studentDao.getOne(newId);
         return newStudent;
     }
-
 }

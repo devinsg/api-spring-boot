@@ -1,6 +1,7 @@
 package com.demo.airline.dao;
 
 import com.demo.airline.models.Student;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -8,12 +9,14 @@ import javax.persistence.Query;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
+@Component
 public class StudentDao implements IStudentDao {
     @PersistenceContext
     private EntityManager entityManager;
 
-    private Map<Long, Student> students;
+    /*private Map<Long, Student> students;
     {
         students = new HashMap<>();
         students.put(1L, new Student(1,"Eric", "Colbert", "English", 145.00));
@@ -22,27 +25,33 @@ public class StudentDao implements IStudentDao {
         students.put(4L, new Student(4,"Ester", "Freeman", "Chinese", 185.00));
         students.put(5L, new Student(5,"Ann", "Mousier", "French", 125.00));
         students.put(6L, new Student(6,"Peter", "Walton", "Khmer", 125.00));
-    }
+    }*/
 
     @Override
     public Student getOne(long id) {
-        return students.get(id);
+        return entityManager.find(Student.class, id);
+    }
+
+    @Override
+    public Collection<Student> findByFirstName(String firstName) {
+        Query query = entityManager.createQuery("SELECT stu FROM Student stu WHERE stu.firstName =: firstName", Student.class);
+        query.setParameter("firstName", firstName);
+        return query.getResultList();
     }
 
     @Override
     public Collection<Student> getAll() {
-        return students.values();
+        Query query = entityManager.createQuery("FROM Student");
+        return query.getResultList();
     }
 
     @Override
     public long add(String firstName, String surName, String department, double fees) {
-        long newId = students.size();
-        newId++;
-        students.put(newId, new Student(newId ,firstName, surName, department, fees));
-        return newId;
+        Student newStudent = new Student(firstName, surName, department, fees);
+        entityManager.persist(newStudent);
+        return newStudent.getId();
     }
 
-    /* implement to access database */
     @Override
     public Student getById(long id) {
         return entityManager.find(Student.class, id);

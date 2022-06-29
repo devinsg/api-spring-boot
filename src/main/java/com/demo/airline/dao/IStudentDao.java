@@ -10,9 +10,11 @@ import java.util.Collection;
 public interface IStudentDao {
     Student getOne(long id);
 
+    Student getById(long id);
+
     Collection<Student> getAll();
 
-    Student getById(long id);
+    Collection<Student> findByFirstName(String firstName);
 
     @Transactional
     long add(String firstName, String surName, String department, double fees);
