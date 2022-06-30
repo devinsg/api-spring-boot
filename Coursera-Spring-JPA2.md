@@ -25,3 +25,7 @@
 # Embedded actions in JSON
 - HATEOAS request allows us to not only send the data but also specify the related actions
 - singple most important reason of HATEOAS is loose coupling (cac ket noi it phu thuoc)
+
+# Projections
+- Subset of data: we don't want service return entity properties entirely, but only a subset of attributes. We can create a projection in same package as the repository.
+- The name of the projection and the entities, and we use an attribute wrapped around getter from that entity.
