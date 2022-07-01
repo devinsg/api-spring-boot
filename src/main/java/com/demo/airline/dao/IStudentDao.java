@@ -17,13 +17,16 @@ public interface IStudentDao {
     Collection<Student> findByFirstName(String firstName);
 
     @Transactional
-    long add(String firstName, String surName, String department, double fees);
-
-    @Transactional
     long add(Student student);
 
     @Transactional
-    Student update(long id, String department);
+    long add(String firstName, String surName, long departmentId, double fees);
+
+    @Transactional
+    Student update(long id, long departmentId);
+
+    @Transactional
+    Student update(long id, String firstName, String surName, long departmentId, double fees);
 
     @Transactional
     long delete(long id);

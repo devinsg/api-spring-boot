@@ -1,7 +1,11 @@
 package com.demo.airline.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.ArrayList;
+import java.util.Collection;
 
 /*
    * TABLE STUDENT
@@ -21,39 +25,43 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "StudentId")
+    @Column(name = "student_id")
     private long id;
 
-    @Column(name = "FirstName")
+    @Column(name = "first_name")
     private String firstName;
 
-    @Column(name = "SurName")
+    @Column(name = "sur_name")
     private String surName; //lastName
 
-    @Column(name = "Department")
-    private String dept;
+    @Column(name = "department_id")
+    private Long dept;
 
-    @Column(name = "Fees")
+    @Column(name = "fees")
     private Double fees;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "student", orphanRemoval = true, cascade = CascadeType.ALL)
+    private Collection<Course> courses = new ArrayList<>();
 
     public Student() {
         super();
     }
 
-    public Student(String firstName, String surName, String dept, Double fees) {
+    public Student(String firstName, String surName, long deptId, double fees) {
         super();
         this.firstName = firstName;
         this.surName = surName;
-        this.dept = dept;
+        this.dept = deptId;
         this.fees = fees;
     }
 
-    public Student(long id, String firstName, String surName, String dept, Double fees) {
+    public Student(long id, String firstName, String surName, long deptId, double fees) {
         super();
         this.id = id;
         this.firstName = firstName;
         this.surName = surName;
-        this.dept = dept;
+        this.dept = deptId;
         this.fees = fees;
     }
 
@@ -87,11 +95,11 @@ public class Student {
         this.surName = surName;
     }
 
-    public String getDept() {
+    public Long getDept() {
         return dept;
     }
 
-    public void setDept(String dept) {
+    public void setDept(Long dept) {
         this.dept = dept;
     }
 

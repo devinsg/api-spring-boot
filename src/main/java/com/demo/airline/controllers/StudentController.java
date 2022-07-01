@@ -11,10 +11,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.*;
 import javax.inject.*;
+import javax.persistence.PreUpdate;
 import javax.servlet.http.HttpServletRequest;
 import java.util.stream.Collectors;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/api/v1/student")
 @EnableConfigurationProperties(value = StudentProperties.class)
 public class StudentController {
@@ -87,6 +89,13 @@ public class StudentController {
                 .collect(Collectors.toList());
     }
 
+    /*@GetMapping(path = "/search/department", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<String> getDepartments() {
+        return studentService.getAllStudents()
+                .stream().map(p -> p.getDept())
+                .distinct().collect(Collectors.toList());
+    }*/
+
     @GetMapping(path = "/list/{department}")
     public List<Student> getStudentsPerDepartment(
             @PathVariable("department") String department,
@@ -142,6 +151,12 @@ public class StudentController {
         } else {
             return null;
         }
+    }
+
+    @PostMapping(path = "/adding")
+    public ResponseEntity<String> adding(@RequestBody Student student) {
+        Student stu = studentService.add(student.getFirstName(), student.getSurName(), student.getDept(), student.getFees());
+        return ResponseEntity.accepted().header("location", "/student" + stu.getId()).build();
     }
 
     @PostMapping(

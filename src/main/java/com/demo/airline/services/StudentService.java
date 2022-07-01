@@ -63,9 +63,15 @@ public class StudentService implements IStudentService {
     }
 
     @Override
-    public Student add(String firstName, String surName, String department, double fees) {
-        long newId = studentDao.add(firstName, surName, department, fees);
+    public Student add(String firstName, String surName, long departmentId, double fees) {
+        long newId = studentDao.add(firstName, surName, departmentId, fees);
         Student newStudent = studentDao.getOne(newId);
         return newStudent;
+    }
+
+    @Override
+    public Student edit(long id, String firstName, String surName, long departmentId, double fees) {
+        Student student = studentDao.update(id, firstName, surName, departmentId, fees);
+        return student;
     }
 }

@@ -928,23 +928,106 @@ VALUES (12,'Building APIs in ASP.NET Core','','','Oak',30);
 
 
 -- table Student
-INSERT INTO Student (FirstName,SurName,Department,Fees)
-VALUES ('Eric', 'Colbert', 'English', 200);
+INSERT INTO Student (first_name,sur_name,department_id,fees)
+VALUES ('Eric', 'Colbert', 1, 200);
 
-INSERT INTO Student (FirstName,SurName,Department,Fees)
-VALUES ('Mary', 'Contrary', 'French', 300);
+INSERT INTO Student (first_name,sur_name,department_id,fees)
+VALUES ('Mary', 'Contrary', 2, 300);
 
-INSERT INTO Student (FirstName,SurName,Department,Fees)
-VALUES ('Jason', 'Stewart', 'Chinese', 450);
+INSERT INTO Student (first_name,sur_name,department_id,fees)
+VALUES ('Jason', 'Stewart', 3, 450);
 
-INSERT INTO Student (FirstName,SurName,Department,Fees)
-VALUES ('Ester', 'Freeman', 'Physical', 280);
+INSERT INTO Student (first_name,sur_name,department_id,fees)
+VALUES ('Ester', 'Freeman', 4, 280);
 
-INSERT INTO Student (FirstName,SurName,Department,Fees)
-VALUES ('Ann', 'Mousier', 'Khmer', 135);
+INSERT INTO Student (first_name,sur_name,department_id,fees)
+VALUES ('Ann', 'Mousier', 4, 135);
 
-INSERT INTO Student (FirstName,SurName,Department,Fees)
-VALUES ('Peter', 'Walton', 'Georgraphy', 185);
+INSERT INTO Student (first_name,sur_name,department_id,fees)
+VALUES ('Paul', 'Ryan', 5, 85);
 
-INSERT INTO Student (FirstName,SurName,Department,Fees)
-VALUES ('David', 'Beckham', 'History', 65);
+INSERT INTO Student (first_name,sur_name,department_id,fees)
+VALUES ('Johny', 'Deep', 5, 98);
+
+INSERT INTO Student (first_name,sur_name,department_id,fees)
+VALUES ('Peter', 'Walton', 5, 185);
+
+INSERT INTO Student (first_name,sur_name,department_id,fees)
+VALUES ('David', 'Beckham', 6, 65);
+
+INSERT INTO Student (first_name,sur_name,department_id,fees)
+VALUES ('Stephen', 'Cheadle', 6, 135);
+
+INSERT INTO Student (first_name,sur_name,department_id,fees)
+VALUES ('Ann', 'Hilbert', 2, 95);
+
+INSERT INTO Student (first_name,sur_name,department_id,fees)
+VALUES ('Brian', 'Duvall', 5, 145);
+
+INSERT INTO Student (first_name,sur_name,department_id,fees)
+VALUES ('Paul', 'Walker', 5, 225);
+
+INSERT INTO Student (first_name,sur_name,department_id,fees)
+VALUES ('Johny', 'Walker', 5, 215);
+
+INSERT INTO Student (first_name,sur_name,department_id,fees)
+VALUES ('Andy', 'Murray', 5, 415);
+
+INSERT INTO Student (first_name,sur_name,department_id,fees)
+VALUES ('Amber', 'Hearing', 2, 115);
+
+-- table Department
+INSERT INTO Department(title, description)
+VALUES ('English', 'English');
+
+INSERT INTO Department(title, description)
+VALUES ('French', 'French');
+
+INSERT INTO Department(title, description)
+VALUES ('Chinese', 'Chinese');
+
+INSERT INTO Department(title, description)
+VALUES ('Khmer', 'Khmer');
+
+INSERT INTO Department(title, description)
+VALUES ('Georgraphy', 'Georgraphy');
+
+INSERT INTO Department(title, description)
+VALUES ('Chemistry', 'Chemistry');
+
+-- table Course
+INSERT INTO Course(student_id, title, location)
+VALUES (1, 'French History', 'University of Texas');
+
+INSERT INTO Course(student_id, title, location)
+VALUES (1, 'French Art', 'Texas State of University');
+
+INSERT INTO Course(student_id, title, location)
+VALUES (1, 'History of Art', 'Texas State of University');
+
+INSERT INTO Course(student_id, title, location)
+VALUES (2, 'French Art', 'Texas State of University');
+
+INSERT INTO Course(student_id, title, location)
+VALUES (3, 'History of Art', 'Texas State of University');
+
+INSERT INTO Course(student_id, title, location)
+VALUES (4, 'French History', 'University of Texas');
+
+INSERT INTO Course(student_id, title, location)
+VALUES (5, 'English History', 'University of Texas');
+
+INSERT INTO Course(student_id, title, location)
+VALUES (16, 'French History', 'University of Texas');
+
+INSERT INTO Course(student_id, title, location)
+VALUES (16, 'French Art', 'Texas State of University');
+
+INSERT INTO Course(student_id, title, location)
+VALUES (16, 'History of Art', 'Texas State of University');
+
+INSERT INTO Course(student_id, title, location)
+VALUES (16, 'Military Strategy', 'University of Tokyo');
+
+INSERT INTO Course(student_id, title, location)
+VALUES (16, 'Japanese History', 'University of Tokyo');

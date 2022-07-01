@@ -13,6 +13,11 @@
 - The resources are implemented in Hypermedia-style, where Spring Data Rest use HAL JSON with content type application/json in response
 - To add Spring Data Rest to Spring Boot Application, use appropriate dependency
 
+# Loose Coupling vs Tight Coupling
+- loose coupling: ket noi it phu thuoc
+- tight coupling: ket noi chat che
+- https://www.geeksforgeeks.org/coupling-in-java/
+
 # see JPA Repositories: 
 - https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#reference
 - https://docs.spring.io/spring-data/data-commons/docs/1.6.1.RELEASE/reference/html/repositories.html
@@ -29,3 +34,21 @@
 # Projections
 - Subset of data: we don't want service return entity properties entirely, but only a subset of attributes. We can create a projection in same package as the repository.
 - The name of the projection and the entities, and we use an attribute wrapped around getter from that entity.
+- @Projection(name="surName", types = Employee.class)
+- public Interface LastName {...}
+
+# Excerpts
+- excerpts are projections which apply as default views to resource collections
+- add excerptProjection attribute to use our projection class "LastName" on our @RepositoryRestResource, will cause resource collections to use the projection
+- less data is represented and HATEOAS links led to details view of the entity
+- @RepositoryRestResource(collectionResourceRel="staff", path="employees", excerptProjection=LastName.class)
+- public interface EmployeeRepository extends PagingAndSortingRepository {...}
+
+# Q1: What are the key JPA Classes for interactions with a database?
+EntityManagerFactory and EntityManager control all interactions trough their API to the DataSource
+
+# Q2: Where do you configure a DataSource in a Spring Boot application? 
+application.properties or you can define a DataSource in a Java Config file i.e. class annotated with @Configuration 
+
+# Q3: What do we mean by an extended Persistence Context? 
+An EntityManager Context injected with @PersistenceContext is transactionally scoped. In order to "live" beyond the commit or rollback of a transaction you have to create the EntityManager from the EntityManager yourself, and close it yourself.

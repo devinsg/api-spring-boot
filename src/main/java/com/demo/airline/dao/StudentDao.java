@@ -6,10 +6,8 @@ import org.springframework.stereotype.Component;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.transaction.Transactional;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Component
 public class StudentDao implements IStudentDao {
@@ -46,10 +44,18 @@ public class StudentDao implements IStudentDao {
     }
 
     @Override
-    public long add(String firstName, String surName, String department, double fees) {
-        Student newStudent = new Student(firstName, surName, department, fees);
-        entityManager.persist(newStudent);
-        return newStudent.getId();
+    @Transactional
+    public long add(String firstName, String surName, long departmentId, double fees) {
+        entityManager.createNativeQuery("INSERT INTO Student (first_name,sur_name,department_id,fees) VALUES (?, ?, ?, ?)")
+                .setParameter(1, firstName)
+                .setParameter(2, surName)
+                .setParameter(3, departmentId)
+                .setParameter(4, fees)
+                .executeUpdate();
+        Query query = entityManager.createNativeQuery("SELECT MAX(Student_Id) MaxId FROM Student");
+        String newId = query.getResultList().get(0).toString();
+        if (newId != null && newId != "") return Long.parseLong(newId);
+        else return 0;
     }
 
     @Override
@@ -64,9 +70,21 @@ public class StudentDao implements IStudentDao {
     }
 
     @Override
-    public Student update(long id, String department) {
+    public Student update(long id, long departmentId) {
         Student student = entityManager.find(Student.class, id);
-        student.setDept(department);
+        student.setDept(departmentId);
+        entityManager.persist(student);
+        return student;
+    }
+
+    @Override
+    public Student update(long id, String firstName, String surName, long departmentId, double fees) {
+        Student student = entityManager.find(Student.class, id);
+        student.setFirstName(firstName);
+        student.setSurName(surName);
+        student.setDept(departmentId);
+        student.setFees(fees);
+        entityManager.persist(student);
         return student;
     }
 

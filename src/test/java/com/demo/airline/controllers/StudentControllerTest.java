@@ -70,4 +70,36 @@ public class StudentControllerTest {
         System.out.println("response status:" + responseEntity.getStatusCode());
         System.out.println("response body:" + responseEntity.getBody());
     }
+
+    @Test
+    void testAdd() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("content-type", MediaType.APPLICATION_JSON_VALUE);
+
+        Student student = new Student();
+        student.setFirstName("Jack");
+        student.setSurName("Ryan");
+        student.setDept(2L);
+        student.setFees((double)128);
+
+        ResponseEntity<String> response = new RestTemplate().postForEntity(baseUrl + "/university/api/v1/student/add", new HttpEntity(student, headers), String.class);
+        System.out.println(response);
+        Assertions.assertEquals(response.getStatusCode(), HttpStatus.OK);
+    }
+
+    @Test
+    void testAdding() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("content-type", MediaType.APPLICATION_JSON_VALUE);
+
+        Student student = new Student();
+        student.setFirstName("Shadow");
+        student.setSurName("Recruit");
+        student.setDept(3L);
+        student.setFees((double)129);
+
+        ResponseEntity<String> response = new RestTemplate().postForEntity(baseUrl + "/university/api/v1/student/add", new HttpEntity(student, headers), String.class);
+        System.out.println(response);
+        Assertions.assertEquals(response.getStatusCode(), HttpStatus.OK);
+    }
 }
