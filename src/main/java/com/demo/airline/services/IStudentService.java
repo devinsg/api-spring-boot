@@ -20,4 +20,6 @@ public interface IStudentService {
     Student add(String firstName, String surName, long departmentId, double fees);
 
     Student edit(long id, String firstName, String surName, long departmentId, double fees);
+
+    Student save(long id, String firstName, String surName, long departmentId, double fees);
 }

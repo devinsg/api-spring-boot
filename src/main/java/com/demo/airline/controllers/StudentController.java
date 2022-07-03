@@ -1,6 +1,7 @@
 package com.demo.airline.controllers;
 
 import com.demo.airline.StudentProperties;
+import com.demo.airline.exception.AppException;
 import com.demo.airline.models.Student;
 import com.demo.airline.models.StudentCollection;
 import com.demo.airline.services.IStudentService;
@@ -13,6 +14,7 @@ import java.util.*;
 import javax.inject.*;
 import javax.persistence.PreUpdate;
 import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -154,9 +156,30 @@ public class StudentController {
     }
 
     @PostMapping(path = "/adding")
-    public ResponseEntity<String> adding(@RequestBody Student student) {
-        Student stu = studentService.add(student.getFirstName(), student.getSurName(), student.getDept(), student.getFees());
-        return ResponseEntity.accepted().header("location", "/student" + stu.getId()).build();
+    @Transactional(rollbackOn = AppException.class)
+    public ResponseEntity<String> adding(@RequestBody Student student) throws AppException{
+        studentService.add(student.getFirstName(), student.getSurName(), student.getDept(), student.getFees());
+        if(student.getFees() >= 200) {
+            throw new AppException("Blow up - adding item");
+        }
+        return ResponseEntity.accepted()
+                .header("location", "/student/" + student.getId()).build();
+    }
+
+    @PostMapping(path = "/editing")
+    @Transactional(rollbackOn = AppException.class)
+    public ResponseEntity<String> editing(@RequestBody Student student) throws AppException {
+        if(student.getFees() >= 200) {
+            throw new AppException("Blow up - editing item");
+        }
+        studentService.save(student.getId(), student.getFirstName(), student.getSurName(), student.getDept(), student.getFees());
+        return ResponseEntity.accepted()
+                .header("location", "/student/" + student.getId()).build();
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Object> handle(Exception exception) {
+        return ResponseEntity.badRequest().build();
     }
 
     @PostMapping(

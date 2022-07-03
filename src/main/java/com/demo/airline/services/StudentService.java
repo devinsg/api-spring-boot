@@ -74,4 +74,11 @@ public class StudentService implements IStudentService {
         Student student = studentDao.update(id, firstName, surName, departmentId, fees);
         return student;
     }
+
+    @Override
+    public Student save(long id, String firstName, String surName, long departmentId, double fees) {
+        Student student = new Student(id, firstName, surName, departmentId, fees);
+        Student updateStudent = studentRepository.save(student);
+        return updateStudent;
+    }
 }

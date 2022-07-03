@@ -87,6 +87,7 @@ public class WorkSupport {
 # @Around Advice
 - we can execute the advice before the Joinpoint, proceed with the Joinpoint (or not) and execute advice after the Joinpoint
 - the advice method must take a ProceedingJoinPoint parameter, code after the call to proceed() will execute after the Joinpoint
+- replace out bound response types: with a little extra help from the joinpoint we can get at the input arguments and the return objects
 @Around("log()")
 public object goToandFromwork(ProceedingJoinPoint jp) throws Throwable {
     System.out.println("Starting the day at " + new Date());
@@ -94,7 +95,6 @@ public object goToandFromwork(ProceedingJoinPoint jp) throws Throwable {
     System.out.println("Leaving for the day at " + new Date());
     return object;
 }
-- replace out bound response types: with a little extra help from the joinpoint we can get at the input arguments and the return objects
 
 # Q1: What is a JoinPoint?
 Describes an entry point into the application such as a method invocation. It is tied to a PointCut which gets associated with one or many Advices
