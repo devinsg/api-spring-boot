@@ -14,6 +14,11 @@ public class TagController {
     private ITagService tagService;
 
     @GetMapping
+    public String get() {
+        return "Tag is running";
+    }
+
+    @GetMapping(path = "/list")
     public List<Tag> list(@RequestParam(required = false) String name) {
         if (name != null) {
             return tagService.queryByTagNameContains(name);

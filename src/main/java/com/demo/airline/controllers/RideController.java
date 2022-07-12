@@ -7,8 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -19,13 +17,7 @@ public class RideController {
 
     @GetMapping(path = "/list")
     public ResponseEntity<List<Ride>> list() {
-        List<Ride> rides = new ArrayList<>();
-
-        Ride ride1 = new Ride();
-        ride1.setRideId(1L);
-        ride1.setRideName("Land Cruiser");
-        rides.add(ride1);
-
+        List<Ride> rides = rideService.getList();
         return ResponseEntity.ok().body(rides);
     }
 }
