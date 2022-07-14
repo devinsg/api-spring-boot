@@ -3,7 +3,9 @@ package com.demo.airline.services;
 import com.demo.airline.models.Ride;
 import com.demo.airline.repositories.IRideRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -33,6 +35,7 @@ public class RideService implements IRideService {
     public Ride getById(long id) { return rideRepository.getById(id); }
 
     @Override
+    @Transactional
     public void batch() {
         List<Ride> rides = rideRepository.getRides();
         List<Object[]> pairs = new ArrayList<>();
@@ -43,6 +46,10 @@ public class RideService implements IRideService {
         }
 
         rideRepository.editRides(pairs);
+
+        throw new DataAccessException("Testing Exception Handling") {
+
+        };
     }
 
     @Override

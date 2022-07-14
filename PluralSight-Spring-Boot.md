@@ -7,3 +7,6 @@
 - Retrieve record: JdbcTemplate, RowMapper, SimpleJdbcCall, PreparedStatementCreateor
 - Update record: JdbcTemplate, batchUpdate
 - Delete record: JdbcTemplate, NamedParameterJdbcTemplate
+- Exception: ExceptionHandler, ServiceError, ThrowError
+- Transaction: TransactionManager, @Transactional, Commit/Rollback
+

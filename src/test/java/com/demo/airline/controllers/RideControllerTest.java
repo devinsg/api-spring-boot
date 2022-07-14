@@ -91,6 +91,12 @@ public class RideControllerTest {
     @Test
     public void testDelete() {
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.delete("http://localhost:8085/university/api/v1/ride/delete/9");
+        restTemplate.delete("http://localhost:8085/university/api/v1/ride/delete/7");
+    }
+
+    @Test
+    public void testException() {
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.getForObject("http://localhost:8085/university/api/v1/ride/test", Ride.class);
     }
 }
