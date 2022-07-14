@@ -3,6 +3,7 @@ package com.demo.airline.models;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "ride_tracker")
 public class Ride {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -11,6 +12,9 @@ public class Ride {
 
     @Column(name = "ride_name")
     private String rideName;
+
+    @Column(name = "duration")
+    private double duration;
 
     public Long getRideId() {
         return rideId;
@@ -26,5 +30,13 @@ public class Ride {
 
     public void setRideName(String rideName) {
         this.rideName = rideName;
+    }
+
+    public double getDuration() {
+        return duration;
+    }
+
+    public void setDuration(double duration) {
+        this.duration = duration;
     }
 }

@@ -27,4 +27,28 @@ public class RideControllerTest {
             System.out.println("ride name:" + ride.getRideName());
         }
     }
+
+    @Test
+    public void testUpdateRide() {
+        RestTemplate restTemplate = new RestTemplate();
+
+        Ride ride = new Ride();
+        ride.setRideName("Ride Test");
+        ride.setDuration(500);
+
+        restTemplate.put("http://localhost:8085/university/api/v1/ride/edit", ride);
+    }
+
+    @Test
+    public void testCreateRide() {
+        RestTemplate restTemplate = new RestTemplate();
+
+        Ride ride = new Ride();
+        ride.setRideName("Ride Test");
+        ride.setDuration(500);
+
+        ride = restTemplate.postForObject("http://localhost:8085/university/api/v1/ride/add", ride, Ride.class);
+
+        System.out.println("Ride:" + ride);
+    }
 }
