@@ -143,3 +143,53 @@ CREATE TABLE workshop_registrations
     workshop_id        INT NOT NULL,
     attendee_ticket_id INT NOT NULL
 );
+
+-- Coursera tables
+DROP TABLE Student;
+CREATE TABLE Student
+(
+    student_id       INT PRIMARY KEY,
+    first_name       VARCHAR(50)   NOT NULL,
+    sur_name         VARCHAR(50)   NOT NULL,
+    department_id    INT DEFAULT 0,
+    fees             NUMERIC(18, 2) DEFAULT 0,
+    Version          INT DEFAULT 0
+);
+
+DROP TABLE Department;
+CREATE TABLE Department
+(
+    department_id   INT PRIMARY KEY,
+    title           VARCHAR(50)   NOT NULL,
+    description     VARCHAR(100)  DEFAULT NULL
+);
+
+DROP TABLE Course;
+CREATE TABLE Course
+(
+    course_id      INT PRIMARY KEY,
+    student_id     INT DEFAULT 0,
+    title          VARCHAR(50) NOT NULL,
+    location       VARCHAR(50) NOT NULL, 
+    version        INT DEFAULT 0
+);
+
+DROP TABLE Qualification;
+CREATE TABLE Qualification
+(
+    qualification_id INT PRIMARY KEY,
+    student_id       INT NOT NULL,
+    title            VARCHAR(50) NOT NULL,
+    location         VARCHAR(50) NOT NULL, 
+    version          INT DEFAULT 0
+);
+
+DROP TABLE ride_tracker;
+CREATE TABLE ride_tracker
+(
+    ride_id     INT PRIMARY KEY,    
+    ride_name   VARCHAR(50) NOT NULL,
+    ride_date   DATETIME DEFAULT NULL,
+    duration    NUMERIC(8, 2) NOT NULL 
+);
+
