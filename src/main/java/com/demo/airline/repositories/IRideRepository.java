@@ -17,5 +17,9 @@ public interface IRideRepository {
 
     List<Ride> getRides();
 
-    Ride getById(long Id);
+    Ride getById(long id);
+
+    boolean deleteById(long id);
+
+    boolean deleteById_jdbc(long id);
 }

@@ -87,4 +87,10 @@ public class RideControllerTest {
             Assertions.assertEquals(new Date().getDate(), ride.getRideDate().getDate());
         }
     }
+
+    @Test
+    public void testDelete() {
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.delete("http://localhost:8085/university/api/v1/ride/delete/9");
+    }
 }

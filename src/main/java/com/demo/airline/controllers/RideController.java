@@ -41,4 +41,9 @@ public class RideController {
         rideService.batch();
         return null;
     }
+
+    @DeleteMapping(path = "/delete/{id}")
+    public @ResponseBody boolean delete(@PathVariable(value = "id") long id){
+        return rideService.deleteById(id);
+    }
 }

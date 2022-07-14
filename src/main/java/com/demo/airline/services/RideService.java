@@ -44,4 +44,9 @@ public class RideService implements IRideService {
 
         rideRepository.editRides(pairs);
     }
+
+    @Override
+    public boolean deleteById(long id) {
+        return rideRepository.deleteById(id);
+    }
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -78,15 +79,37 @@ public class RideRepository implements IRideRepository {
     @Override
     public Ride edit(Ride ride) {
         String sqlUpdate = "UPDATE ride_tracker SET ride_name = ?, duration = ? WHERE ride_id = ?";
-        int id = jdbcTemplate.update(sqlUpdate, ride.getRideName(), ride.getDuration(), ride.getRideId());
-        ride.setRideId((long) id);
-        return ride;
+        jdbcTemplate.update(sqlUpdate, ride.getRideName(), ride.getDuration(), ride.getRideId());
+        return getById(ride.getRideId());
     }
 
     @Override
     public void editRides(List<Object[]> pairs) {
         String sqlEdit = "UPDATE ride_tracker SET ride_date = ? WHERE ride_id = ?";
         jdbcTemplate.batchUpdate(sqlEdit, pairs);
+    }
+
+    @Override
+    public boolean deleteById_jdbc(long rideId) {
+        String sql = "DELETE FROM ride_tracker WHERE ride_id = ?";
+        int result = jdbcTemplate.update(sql, rideId);
+
+        if (result == 1) return true;
+        else return false;
+    }
+
+    @Override
+    public boolean deleteById(long rideId) {
+        String sql = "DELETE FROM ride_tracker WHERE ride_id = :ride_id";
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("ride_id", rideId);
+
+        NamedParameterJdbcTemplate nameTemplate = new NamedParameterJdbcTemplate(jdbcTemplate);
+        int result = nameTemplate.update(sql, params);
+
+        if (result == 1) return true;
+        else return false;
     }
 
     @Override
@@ -108,4 +131,5 @@ public class RideRepository implements IRideRepository {
             return null;
         }
     }
+
 }

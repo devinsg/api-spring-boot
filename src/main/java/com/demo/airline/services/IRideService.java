@@ -14,4 +14,6 @@ public interface IRideService {
     Ride getById(long id);
 
     void batch();
+
+    boolean deleteById(long id);
 }
