@@ -5,6 +5,8 @@ import com.demo.airline.repositories.IRideRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service("rideService")
@@ -19,7 +21,7 @@ public class RideService implements IRideService {
 
     @Override
     public Ride edit(Ride ride) {
-        return rideRepository.add(ride);
+        return rideRepository.edit(ride);
     }
 
     @Override
@@ -29,4 +31,17 @@ public class RideService implements IRideService {
 
     @Override
     public Ride getById(long id) { return rideRepository.getById(id); }
+
+    @Override
+    public void batch() {
+        List<Ride> rides = rideRepository.getRides();
+        List<Object[]> pairs = new ArrayList<>();
+
+        for(Ride ride:rides) {
+            Object[] tmp = { new Date(), ride.getRideId() };
+            pairs.add(tmp);
+        }
+
+        rideRepository.editRides(pairs);
+    }
 }

@@ -42,10 +42,10 @@ public class StudentAspect {
         LOG.info("Around before ->" + jp.getSignature().getName() + " with id " + id);
         Object object = jp.proceed();
 
-        if(object.getClass().getName() == "Student") {
+        /*if(object.getClass().getName() == "Student") {
             Student student = (Student) object;
             LOG.info("Around after ->" + student.getFirstName() + " " + student.getSurName());
-        }
+        }*/
 
         return object;
     }

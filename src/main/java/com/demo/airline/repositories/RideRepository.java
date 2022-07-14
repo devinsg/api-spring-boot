@@ -3,9 +3,9 @@ package com.demo.airline.repositories;
 import com.demo.airline.models.Ride;
 import com.demo.airline.util.RideRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -13,7 +13,6 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,15 +25,16 @@ public class RideRepository implements IRideRepository {
     private JdbcTemplate jdbcTemplate;
 
     @Override
-    public Ride add_2(Ride ride) {
-        String sqlInsert = "INSERT INTO ride_tracker(ride_name, duration) VALUES (?, ?)";
-        int newId = jdbcTemplate.update(sqlInsert, ride.getRideName(), ride.getDuration());
-        ride.setRideId((long) newId);
-        return ride;
+    public Ride add(Ride ride) {
+        String sql = "INSERT INTO ride_tracker(ride_name, duration) VALUES (?, ?)";
+        jdbcTemplate.update(sql, ride.getRideName(), ride.getDuration());
+
+        sql = "SELECT * FROM ride_tracker WHERE ride_id = (SELECT MAX(ride_id) max_id FROM ride_tracker)";
+        return jdbcTemplate.queryForObject(sql, new RideRowMapper());
     }
 
     @Override
-    public Ride add_3(Ride ride) {
+    public Ride add_jdbc(Ride ride) {
         SimpleJdbcInsert simpleInsert = new SimpleJdbcInsert(jdbcTemplate);
 
         simpleInsert.setGeneratedKeyName("ride_id");
@@ -58,7 +58,7 @@ public class RideRepository implements IRideRepository {
     }
 
     @Override
-    public Ride add(Ride ride) {
+    public Ride add_statement(Ride ride) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(new PreparedStatementCreator() {
             @Override
@@ -76,6 +76,20 @@ public class RideRepository implements IRideRepository {
     }
 
     @Override
+    public Ride edit(Ride ride) {
+        String sqlUpdate = "UPDATE ride_tracker SET ride_name = ?, duration = ? WHERE ride_id = ?";
+        int id = jdbcTemplate.update(sqlUpdate, ride.getRideName(), ride.getDuration(), ride.getRideId());
+        ride.setRideId((long) id);
+        return ride;
+    }
+
+    @Override
+    public void editRides(List<Object[]> pairs) {
+        String sqlEdit = "UPDATE ride_tracker SET ride_date = ? WHERE ride_id = ?";
+        jdbcTemplate.batchUpdate(sqlEdit, pairs);
+    }
+
+    @Override
     public List<Ride> getRides() {
         String sqlQuery = "SELECT * FROM ride_tracker ORDER BY ride_id DESC";
         List<Ride> rides = jdbcTemplate.query(sqlQuery, new RideRowMapper());
@@ -84,10 +98,14 @@ public class RideRepository implements IRideRepository {
 
     @Override
     public Ride getById(long id) {
-        System.out.println("getById:" + id);
-        String sql = "SELECT * FROM ride_tracker WHERE ride_id = ?";
-        Ride ride = jdbcTemplate.queryForObject(sql, new RideRowMapper(), id);
-        System.out.println("ride:" + ride.getRideName());
-        return ride;
+        try {
+            String sql = "SELECT * FROM ride_tracker WHERE ride_id = ?";
+            Ride ride = jdbcTemplate.queryForObject(sql, new RideRowMapper(), id);
+            System.out.println("ride:" + ride.getRideName());
+            return ride;
+        } catch (EmptyResultDataAccessException exception) {
+            System.out.println("EmptyResultDataAccessException:" + exception.toString());
+            return null;
+        }
     }
 }

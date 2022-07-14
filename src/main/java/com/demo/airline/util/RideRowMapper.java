@@ -13,6 +13,7 @@ public class RideRowMapper implements RowMapper<Ride> {
         Ride ride = new Ride();
         ride.setRideId(rs.getLong("ride_id"));
         ride.setRideName(rs.getString("ride_name"));
+        ride.setRideDate(rs.getDate("ride_date"));
         ride.setDuration(rs.getLong("duration"));
         return ride;
     }

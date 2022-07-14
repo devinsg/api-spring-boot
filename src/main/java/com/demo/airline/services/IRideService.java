@@ -12,4 +12,6 @@ public interface IRideService {
     List<Ride> getList();
 
     Ride getById(long id);
+
+    void batch();
 }

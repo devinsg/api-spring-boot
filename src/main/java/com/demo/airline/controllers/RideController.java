@@ -15,13 +15,13 @@ public class RideController {
     private IRideService rideService;
 
     @GetMapping(path = "/list")
-    public ResponseEntity<List<Ride>> getList() {
+    public @ResponseBody List<Ride> getList() {
         List<Ride> rides = rideService.getList();
-        return ResponseEntity.ok().body(rides);
+        return rides;
     }
 
     @GetMapping(path = "/{id}")
-    public Ride getItem(@PathVariable long id) {
+    public @ResponseBody Ride getItem(@PathVariable(value = "id") long id) {
         Ride ride = rideService.getById(id);
         return ride;
     }
@@ -34,5 +34,11 @@ public class RideController {
     @PutMapping(path = "/edit")
     public @ResponseBody Ride edit(@RequestBody final Ride ride){
         return rideService.edit(ride);
+    }
+
+    @GetMapping(path = "/batch")
+    public @ResponseBody Ride batch(){
+        rideService.batch();
+        return null;
     }
 }
