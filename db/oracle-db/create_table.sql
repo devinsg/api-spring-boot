@@ -183,3 +183,13 @@ CREATE TABLE Qualification
     location         VARCHAR(50) NOT NULL, 
     version          INT DEFAULT 0
 );
+
+DROP TABLE ride_tracker;
+CREATE TABLE ride_tracker
+(
+    ride_id     INT PRIMARY KEY,    
+    ride_name   VARCHAR(50) NOT NULL,
+    ride_date   DATETIME DEFAULT NULL,
+    duration    NUMERIC(8, 2) NOT NULL 
+);
+

@@ -1,6 +1,5 @@
 package com.demo.airline.aspect;
 
-import com.demo.airline.models.Employee;
 import com.demo.airline.models.Student;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -41,9 +40,14 @@ public class StudentAspect {
     @Around("log() && args(id)")
     public Object around(ProceedingJoinPoint jp, long id) throws Throwable {
         LOG.info("Around before ->" + jp.getSignature().getName() + " with id " + id);
-        Student student = (Student) jp.proceed();
-        LOG.info("Around after ->" + student.getFirstName() + " " + student.getSurName());
-        return student;
+        Object object = jp.proceed();
+
+        /*if(object.getClass().getName() == "Student") {
+            Student student = (Student) object;
+            LOG.info("Around after ->" + student.getFirstName() + " " + student.getSurName());
+        }*/
+
+        return object;
     }
 
     /*@Around("add() && args(employee")
