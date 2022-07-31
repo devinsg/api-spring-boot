@@ -17,7 +17,7 @@ public class HomeController {
     @RequestMapping("/")
     public Map getStatus() {
         Map map = new HashMap<String, String>();
-        map.put("app-name", "Spring-Boot-Airline");
+        map.put("app-name", "Spring Boot Demo");
         map.put("app-version", appVersion);
         return map;
     }
