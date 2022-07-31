@@ -4,4 +4,8 @@
 - Version: MongoDB 2.1.9 (from 2.1.9 to 2.2.13), SpringBoot 2.2.1
 - Mongo GUI: Mongo Compass, Robo 3T
 - Mongo Data Annotation frequently: @Document @Id @Field @Transient @Indexed @TextIndexed @CompoundIndex @DbRef
+- Mongo Repository Interface: Repository<T, ID>, CrudRepository <T, ID>, PagingAndSortingRepository<T, ID>, MongoRepository<T, ID>
+- Mongo inserting, updating, deleting documents by MongoTemplate
+- Mongo converter: a feature used for mapping all java types to/from DBObjects when storing or retrieving these objects
+- DBRef format: $ref (name of collection), $id (value of _id field), $db (name of the database)
 - 
