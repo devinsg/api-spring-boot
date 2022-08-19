@@ -4,18 +4,37 @@ import com.demo.airline.models.Ride;
 import com.demo.airline.services.IRideService;
 import com.demo.airline.util.HandleError;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/ride")
 public class RideController {
     @Autowired
     private IRideService rideService;
+
+    @Value("${app.version}")
+    private String appVersion;
+
+    @GetMapping
+    public String status() {
+        return "api ride is running";
+    }
+
+    @GetMapping(path = "/version")
+    public Map getStatus() {
+        Map map = new HashMap<String, String>();
+        map.put("app-name", "Spring-Boot-Airline");
+        map.put("app-version", appVersion);
+        return map;
+    }
 
     @GetMapping(path = "/list")
     public @ResponseBody List<Ride> getList() {
