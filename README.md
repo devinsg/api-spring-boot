@@ -1,5 +1,5 @@
 # api-spring-boot
-- demo: api spring boot 2.7.0, Java 11
+- demo: api spring boot 2.7.0 with Java 11
 - deploy on azure: Java 11, Jar file, 
 - platform: Java SE (Embedded Web Server)
 - resource group: develop-spring-boot 
